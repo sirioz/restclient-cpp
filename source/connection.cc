@@ -515,6 +515,26 @@ RestClient::Connection::post(const std::string& url,
   return this->performCurlRequest(url);
 }
 /**
+ * @brief HTTP POST method
+ *
+ * @param url to query
+ * @param data HTTP POST binary body
+ * @param length body length
+ *
+ * @return response struct
+ */
+RestClient::Response
+RestClient::Connection::post(const std::string& url,
+    const void* data, size_t length) {
+    /** Now specify we want to POST data */
+    curl_easy_setopt(this->curlHandle, CURLOPT_POST, 1L);
+    /** set post fields */
+    curl_easy_setopt(this->curlHandle, CURLOPT_POSTFIELDS, data);
+    curl_easy_setopt(this->curlHandle, CURLOPT_POSTFIELDSIZE, length);
+
+    return this->performCurlRequest(url);
+}
+/**
  * @brief HTTP PUT method
  *
  * @param url to query
